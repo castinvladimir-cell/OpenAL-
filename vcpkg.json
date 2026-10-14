@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+    "openal-soft",
+    {
+      "name": "libsndfile",
+      "default-features": false
+    }
+  ]
+}
