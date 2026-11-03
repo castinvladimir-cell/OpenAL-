@@ -71,8 +71,7 @@ public:
 			alcMakeContextCurrent(nullptr);
 			alcDestroyContext(context_); 
 			alcCloseDevice(device_);
-		}
-		else {
+		} else {
 			alcDestroyContext(context_);
 			alcCloseDevice(device_);
 		}
