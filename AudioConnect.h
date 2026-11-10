@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <AL/alc.h>
 #include <stdexcept>
@@ -10,7 +11,7 @@ private:
 	ALCdevice* device_;
 	ALCcontext* context_;
 
-	void legitcheck_(int function = 0) {
+	void legitcheck_(int function = 0) { // проверки после шагов конструктора
 
 			if (device_ == nullptr && function == 1) {
 				std::cout << "Ошибка 1 (" << std::endl;
@@ -35,13 +36,13 @@ public:
 
 	AudioConnect() {
 
-		device_ = alcOpenDevice(nullptr);
+		device_ = alcOpenDevice(nullptr); // устройство по умолчанию
 		legitcheck_(1);
 
-		context_ = alcCreateContext(device_, nullptr);
+		context_ = alcCreateContext(device_, nullptr); // контекст на устройстве
 		legitcheck_(2);
 
-		alcMakeContextCurrent(context_);
+		alcMakeContextCurrent(context_); // делаем контекст текущим
 		legitcheck_(3);
 
 		std::string devicename = alcGetString(device_, ALC_DEVICE_SPECIFIER);
@@ -66,7 +67,7 @@ public:
 		}*/
 	};
 
-	~AudioConnect() {
+	~AudioConnect() { // закрываем в обратном порядке
 		if (alcGetCurrentContext() == context_) {
 			alcMakeContextCurrent(nullptr);
 			alcDestroyContext(context_); 
