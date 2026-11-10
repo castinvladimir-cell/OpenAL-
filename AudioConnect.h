@@ -48,23 +48,6 @@ public:
 		std::string devicename = alcGetString(device_, ALC_DEVICE_SPECIFIER);
 
 		std::cout << devicename << std::endl;
-
-		/*if (legitcheck_(1) > 0) {
-			legitcheck_(1); 
-		} else if (legitcheck_(1) == 0)  { 
-			context_ = alcCreateContext(device_, nullptr);
-			if (legitcheck_(2) > 0) {
-				legitcheck_(2);
-			} else if (legitcheck_(2) == 0) {
-				alcMakeContextCurrent(context_);
-				if (legitcheck_(3) > 0) {
-					legitcheck_(3);
-				}
-				else {
-					std::cout << alcGetString(device_, ALC_DEVICE_SPECIFIER) << std::endl;
-				}
-			}
-		}*/
 	};
 
 	~AudioConnect() { // закрываем в обратном порядке

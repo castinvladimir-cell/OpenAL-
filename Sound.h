@@ -9,13 +9,13 @@
 
 class Sound {
 private: 
-    ALuint TapeRec_; // источник (магнитофон)
-    ALuint Buffer_; // буфер (кассета)
+    ALuint TapeRec_ = 0; // источник (магнитофон)
+    ALuint Buffer_ = 0; // буфер (кассета)
+    float volumein = 0.5;
 
 public: 
-    double_t volumein = 0.5; 
 
-    double volume(double volume) { // проценты в громкость от 0 до 1
+    float volume(float volume) { // проценты в громкость от 0 до 1
         volumein = volume;
         if (volumein > 100) {
             volumein = 1.0; // max vol.
@@ -24,7 +24,16 @@ public:
         } else {
             volumein = volumein / 100; 
         }
+        alSourcef(TapeRec_, AL_GAIN, volumein);
         return volumein;
+    }
+
+    void play() {
+        alSourcePlay(TapeRec_);
+    }
+
+    void stop() {
+        alSourceStop(TapeRec_);
     }
 
     Sound() { //default 
@@ -64,9 +73,23 @@ public:
             alDeleteBuffers(1, &Buffer_);
             throw std::runtime_error("Error: audio not in buffer");
         }
+
+        // Ага. Ухты, ничего себе
+        alGenSources(1, &TapeRec_);
+        alSourcei(TapeRec_, AL_BUFFER, Buffer_);
+
+        if (alGetError()) { // проверка создания источника и привязки к нему буфера
+            alDeleteSources(1, &TapeRec_);
+            alDeleteBuffers(1, &Buffer_);
+            throw std::runtime_error("Error: something wrong");
+        }
+
+        // Громкость
+        alSourcef(TapeRec_, AL_GAIN, volumein);
     }
 
     ~Sound() {
-
+        alDeleteSources(1, &TapeRec_);
+        alDeleteBuffers(1, &Buffer_);
     }
 };

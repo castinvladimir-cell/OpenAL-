@@ -10,3 +10,6 @@ find_package(OpenAL CONFIG REQUIRED)
 find_package(SndFile CONFIG REQUIRED)
 
 target_link_libraries(SpatialAudio PRIVATE OpenAL::OpenAL SndFile::sndfile)
+
+add_custom_command(TARGET SpatialAudio POST_BUILD # после сборки копируем Deep.wav к exe
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/Deep.wav $<TARGET_FILE_DIR:SpatialAudio>)
