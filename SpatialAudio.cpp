@@ -13,11 +13,11 @@ int main()
 	std::cout << "Programm started..." << std::endl;
 	try {
 		AudioConnect a; // подключаемся к устройству
-		Sound s; // загружаем Deep.wav, создаём буфер и источник
+		Sound s; 	   // загружаем Deep.wav, создаём буфер и источник
 
 		bool work = true;
 		while (work) {
-			std::cout << std::endl << "1 play  2 stop  3 volume  4 exit" << std::endl << "> ";
+			std::cout << std::endl << "1 play  2 stop  3 volume  4 left-right  5 circle  6 exit" << std::endl << "> ";
 
 			int choice = 0;
 			if (!(std::cin >> choice)) { // ввели не число
@@ -50,6 +50,16 @@ int main()
 					break;
 				}
 				case 4:
+					std::cout << "Moving left-right..." << std::endl;
+					s.playOX(); // меню ждёт, пока движение закончится
+					std::cout << "Done" << std::endl;
+					break;
+				case 5:
+					std::cout << "Moving around..." << std::endl;
+					s.aroundcircle();
+					std::cout << "Done" << std::endl;
+					break;
+				case 6:
 					work = false; // выходим из цикла, потом сработают деструкторы
 					break;
 				default:
